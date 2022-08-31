@@ -3,6 +3,8 @@ import { Footer } from "../../components/commons/Footer";
 import { Menu } from "../../components/commons/Menu";
 import { Box, Text, theme } from "../../theme/components";
 import { cmsService } from "../../components/infra/cms/cmsService";
+import { StructuredText } from "react-datocms";
+import { isHeading } from "datocms-structured-text-utils";
 
 export async function getStaticPaths() {
   return {
@@ -57,8 +59,8 @@ export default function FAQQuestionScreen({ title, content }) {
       >
         <Box
           styleSheet={{
-            display: "flex",
-            gap: theme.space.x4,
+            // display: "flex",
+            // gap: theme.space.x4,
             flexDirection: "column",
             width: "100%",
             maxWidth: theme.space.xcontainer_lg,
@@ -68,8 +70,16 @@ export default function FAQQuestionScreen({ title, content }) {
           <Text tag="h1" variant="heading1">
             {title}
           </Text>
-
-          <Box dangerouslySetInnerHTML={{ __html: content }} />
+          <StructuredText
+            data={content}
+            customNodeRules={[
+              renderNodeRule(isHeading, ({ node, children, key }) => {
+                return <Text key={key}>{children}</Text>;
+              }),
+            ]}
+          />
+          {/* <Box dangerouslySetInnerHTML={{ __html: content }} /> */}
+          {/* <pre>{JSON.stringify(content, null, 4)}</pre> */}
         </Box>
       </Box>
 

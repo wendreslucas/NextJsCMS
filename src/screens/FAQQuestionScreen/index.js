@@ -3,7 +3,7 @@ import { Footer } from "../../components/commons/Footer";
 import { Menu } from "../../components/commons/Menu";
 import { Box, Text, theme } from "../../theme/components";
 import { cmsService } from "../../components/infra/cms/cmsService";
-import { StructuredText } from "react-datocms";
+import { renderNodeRule, StructuredText } from "react-datocms";
 import { isHeading } from "datocms-structured-text-utils";
 
 export async function getStaticPaths() {
